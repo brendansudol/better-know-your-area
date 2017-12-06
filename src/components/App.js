@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Map from './Map'
+
 class App extends Component {
   state = { data: [] }
 
@@ -20,6 +22,7 @@ class App extends Component {
     return (
       <div>
         <pre>{JSON.stringify(datum, null, 2)}</pre>
+        <Map geoid={geoid} />
       </div>
     )
   }
