@@ -6,4 +6,4 @@ import App from './components/App'
 const hash = window.location.hash.slice(1)
 const initialGeo = hash || '04000US51'
 
-render(<App geoid={initialGeo} />, document.getElementById('root'))
+render(<App initialGeo={initialGeo} />, document.getElementById('root'))

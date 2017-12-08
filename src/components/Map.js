@@ -7,7 +7,7 @@ import { MAPBOX_KEY } from '../util'
 mapboxgl.accessToken = MAPBOX_KEY
 
 class Map extends Component {
-  state = { lng: -96, lat: 37, zoom: 2 }
+  state = { data: [], lng: -96, lat: 37, zoom: 2 }
 
   componentDidMount() {
     const { lng, lat, zoom } = this.state
@@ -22,7 +22,7 @@ class Map extends Component {
     map.on('load', () => {
       fetch('/data/geom.json')
         .then(response => response.json())
-        .then(data => this.addToMap(data))
+        .then(data => this.setState({ data }, this.initPlace))
     })
 
     map.on('move', () => {
@@ -38,12 +38,21 @@ class Map extends Component {
     this._mapbox = { map }
   }
 
-  addToMap = data => {
+  componentWillReceiveProps(newProps) {
+    const { geoid } = newProps
+
+    if (geoid !== this.props.geoid) {
+      return this.highlightPlace(geoid)
+    }
+  }
+
+  initPlace = () => {
     const { geoid } = this.props
+    const { data } = this.state
     const { map } = this._mapbox
 
     const datum = data.find(d => d.geoid === geoid)
-    const bounds = extent(datum.geom)
+    if (!datum) return
 
     map.addSource('place', {
       type: 'geojson',
@@ -60,7 +69,18 @@ class Map extends Component {
       },
     })
 
-    map.fitBounds(bounds, { padding: 20 })
+    map.fitBounds(extent(datum.geom), { padding: 20 })
+  }
+
+  highlightPlace = geoid => {
+    const { data } = this.state
+    const { map } = this._mapbox
+
+    const datum = data.find(d => d.geoid === geoid)
+    if (!datum) return
+
+    map.getSource('place').setData(datum.geom)
+    map.fitBounds(extent(datum.geom), { padding: 20 })
   }
 
   render() {
