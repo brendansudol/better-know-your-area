@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import Map from './Map'
 
+import { comparePlaces } from '../util'
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -34,6 +36,8 @@ class App extends Component {
     if (data.length === 0) return <p>Loading...</p>
 
     const datum = data.find(d => d.GEOID === geoid)
+    const usa = data.find(d => d.GEOID === '01000US')
+    const comp = comparePlaces(datum, usa)
 
     return (
       <div>
@@ -42,6 +46,7 @@ class App extends Component {
           <button type="submit">Submit</button>
         </form>
         <pre>{JSON.stringify(datum, null, 2)}</pre>
+        <pre>{JSON.stringify(comp, null, 2)}</pre>
         <Map geoid={geoid} />
       </div>
     )
