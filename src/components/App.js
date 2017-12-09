@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-import Code from './Code'
 import Map from './Map'
 
-import { comparePlaces, pick } from '../util'
+import { comparePlaces } from '../util'
+import { formatNum, formatPerc } from '../util/formats'
 
 class App extends Component {
   constructor(props) {
@@ -38,15 +38,37 @@ class App extends Component {
 
     const datum = data.find(d => d.geoid === geoid)
     const usa = data.find(d => d.geoid === '01000US')
+    const comp = comparePlaces(datum, usa)
+
+    const { name, population, metrics } = datum
+    const { diffs } = comp
+
+    const metricsData = Object.entries(metrics).map(([metric, value]) => ({
+      metric,
+      value,
+      diff: diffs[metric],
+    }))
 
     return (
-      <div>
+      <div className="p2">
         <form onSubmit={this.handleSubmit}>
           <input type="text" onChange={this.handleChange} value={search} />
           <button type="submit">Submit</button>
         </form>
-        <Code data={pick(datum, ['geoid', 'name', 'level', 'metrics'])} />
-        <Code data={comparePlaces(datum, usa)} />
+
+        <div className="mb2">
+          <h2>{name}</h2>
+          <div className="mb1">Population: {formatNum(population)}</div>
+          {metricsData.map(d => (
+            <div key={d.metric}>
+              {d.metric}: {d.value}{' '}
+              <span className={`${d.diff < 0 ? 'red' : 'green'}`}>
+                {formatPerc(d.diff)}
+              </span>
+            </div>
+          ))}
+        </div>
+
         <Map data={data} geoid={geoid} />
       </div>
     )
