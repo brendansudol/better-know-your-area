@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 
+import Code from './Code'
 import Map from './Map'
 
-import { comparePlaces } from '../util'
+import { comparePlaces, pick } from '../util'
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/data/acs.json')
+    fetch('/data/data.json')
       .then(response => response.json())
       .then(data => this.setState({ data }))
   }
@@ -35,9 +36,8 @@ class App extends Component {
 
     if (data.length === 0) return <p>Loading...</p>
 
-    const datum = data.find(d => d.GEOID === geoid)
-    const usa = data.find(d => d.GEOID === '01000US')
-    const comp = comparePlaces(datum, usa)
+    const datum = data.find(d => d.geoid === geoid)
+    const usa = data.find(d => d.geoid === '01000US')
 
     return (
       <div>
@@ -45,9 +45,9 @@ class App extends Component {
           <input type="text" onChange={this.handleChange} value={search} />
           <button type="submit">Submit</button>
         </form>
-        <pre>{JSON.stringify(datum, null, 2)}</pre>
-        <pre>{JSON.stringify(comp, null, 2)}</pre>
-        <Map geoid={geoid} />
+        <Code data={pick(datum, ['geoid', 'name', 'level', 'metrics'])} />
+        <Code data={comparePlaces(datum, usa)} />
+        <Map data={data} geoid={geoid} />
       </div>
     )
   }

@@ -7,7 +7,7 @@ import { MAPBOX_KEY } from '../util'
 mapboxgl.accessToken = MAPBOX_KEY
 
 class Map extends Component {
-  state = { data: [], lng: -96, lat: 37, zoom: 2 }
+  state = { lng: -96, lat: 37, zoom: 2 }
 
   componentDidMount() {
     const { lng, lat, zoom } = this.state
@@ -19,11 +19,7 @@ class Map extends Component {
       zoom,
     })
 
-    map.on('load', () => {
-      fetch('/data/geom.json')
-        .then(response => response.json())
-        .then(data => this.setState({ data }, this.initPlace))
-    })
+    map.on('load', this.initPlace)
 
     map.on('move', () => {
       const { lng, lat } = map.getCenter()
@@ -47,8 +43,7 @@ class Map extends Component {
   }
 
   initPlace = () => {
-    const { geoid } = this.props
-    const { data } = this.state
+    const { data, geoid } = this.props
     const { map } = this._mapbox
 
     const datum = data.find(d => d.geoid === geoid)
@@ -73,7 +68,7 @@ class Map extends Component {
   }
 
   highlightPlace = geoid => {
-    const { data } = this.state
+    const { data } = this.props
     const { map } = this._mapbox
 
     const datum = data.find(d => d.geoid === geoid)
