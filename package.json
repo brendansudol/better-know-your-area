@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.7.1",
     "d3-format": "^1.2.1",
     "geojson-extent": "^0.3.2",
     "mapbox-gl": "^0.42.2",
     "react": "^16.2.0",
+    "react-chartjs-2": "^2.6.4",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17"
   },
