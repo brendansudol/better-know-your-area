@@ -2,7 +2,7 @@ import extent from 'geojson-extent'
 import mapboxgl from 'mapbox-gl'
 import React, { Component } from 'react'
 
-import { MAPBOX_KEY } from '../util'
+import { MAPBOX_KEY } from '../util/misc'
 
 mapboxgl.accessToken = MAPBOX_KEY
 

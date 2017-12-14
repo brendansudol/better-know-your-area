@@ -1,6 +1,6 @@
 import { format } from 'd3-format'
 
-import { isNumeric } from './index'
+import { isNumeric } from './misc'
 
 export const formatNum = format(',.0f')
 

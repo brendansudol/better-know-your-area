@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 import Map from './Map'
 
-import { comparePlaces } from '../util'
+import { METRICS } from '../util/metrics'
+import { comparePlaces } from '../util/misc'
 import { formatNum, formatPerc } from '../util/formats'
 
 class App extends Component {
@@ -43,10 +44,10 @@ class App extends Component {
     const { name, population, metrics } = datum
     const { diffs } = comp
 
-    const metricsData = Object.entries(metrics).map(([metric, value]) => ({
-      metric,
-      value,
-      diff: diffs[metric],
+    const metricsData = METRICS.map(m => ({
+      ...m,
+      value: metrics[m.id],
+      diff: diffs[m.id],
     }))
 
     return (
@@ -60,8 +61,8 @@ class App extends Component {
           <h2>{name}</h2>
           <div className="mb1">Population: {formatNum(population)}</div>
           {metricsData.map(d => (
-            <div key={d.metric}>
-              {d.metric}: {d.value}{' '}
+            <div key={d.id}>
+              {d.name}: {d.value}{' '}
               <span className={`${d.diff < 0 ? 'red' : 'green'}`}>
                 {formatPerc(d.diff)}
               </span>
