@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import VirtualizedSelect from 'react-virtualized-select'
 
+import Loading from './Loading'
 import Map from './Map'
 
 import { METRICS } from '../util/metrics'
-import { comparePlaces } from '../util/misc'
+import { computeDiff } from '../util/misc'
 import { formatNum, formatPerc } from '../util/formats'
 
 class App extends Component {
@@ -13,8 +14,7 @@ class App extends Component {
 
     this.state = {
       data: [],
-      geoid: props.initialGeo,
-      selectGeo: null,
+      selected: props.initialGeo,
     }
   }
 
@@ -24,31 +24,33 @@ class App extends Component {
       .then(data => this.setState({ data }))
   }
 
-  handleSelect = selectGeo => {
-    this.setState({ selectGeo })
+  handleSelect = geo => {
+    this.setState({ selected: geo.value })
   }
 
   render() {
-    const { initialGeo } = this.props
-    const { data, selectGeo } = this.state
-
-    if (data.length === 0) return <p>Loading...</p>
-
-    console.log(selectGeo)
-    const geoid = selectGeo ? selectGeo.value : initialGeo
-
+    const { data, selected: geoid } = this.state
     const datum = data.find(d => d.geoid === geoid)
+
+    if (data.length === 0) return <Loading />
+    if (!datum) return <p>BAD GEOID (TODO: BETTER UI)</p>
+
+    const { name, population, related, metrics } = datum
+    const state = data.find(d => d.geoid === related.state)
     const usa = data.find(d => d.geoid === '01000US')
-    const comp = comparePlaces(datum, usa)
 
-    const { name, population, metrics } = datum
-    const { diffs } = comp
+    const metricsData = METRICS.map(m => {
+      const val = metrics[m.id]
+      const valState = state.metrics[m.id]
+      const valUsa = usa.metrics[m.id]
 
-    const metricsData = METRICS.map(m => ({
-      ...m,
-      value: metrics[m.id],
-      diff: diffs[m.id],
-    }))
+      return {
+        ...m,
+        val,
+        state: { val: valState, diff: computeDiff(val, valState) },
+        usa: { val: valUsa, diff: computeDiff(val, valUsa) },
+      }
+    })
 
     const selectOptions = data
       .filter(d => d.sumlevel === '050')
@@ -60,7 +62,7 @@ class App extends Component {
           <VirtualizedSelect
             options={selectOptions}
             onChange={this.handleSelect}
-            value={selectGeo}
+            value={geoid}
           />
         </div>
 
@@ -69,9 +71,9 @@ class App extends Component {
           <div className="mb1">Population: {formatNum(population)}</div>
           {metricsData.map(d => (
             <div key={d.id}>
-              {d.name}: {d.value}{' '}
-              <span className={`${d.diff < 0 ? 'red' : 'green'}`}>
-                {formatPerc(d.diff)}
+              {d.name}: {d.val}{' '}
+              <span className={`${d.usa.diff < 0 ? 'red' : 'green'}`}>
+                {formatPerc(d.usa.diff)}
               </span>
             </div>
           ))}

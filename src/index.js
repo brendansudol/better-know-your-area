@@ -8,6 +8,6 @@ import 'react-virtualized-select/styles.css'
 import App from './components/App'
 
 const hash = window.location.hash.slice(1)
-const initialGeo = hash || '04000US51'
+const initialGeo = hash || '05000US51059'
 
 render(<App initialGeo={initialGeo} />, document.getElementById('root'))

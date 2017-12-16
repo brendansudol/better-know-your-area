@@ -1,11 +1,13 @@
 {
   "name": "get-to-know-an-area",
-  "version": "0.1.0",
+  "homepage": "https://brendansudol.github.io/get-to-know-an-area",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "chart.js": "^2.7.1",
     "d3-format": "^1.2.1",
     "geojson-extent": "^0.3.2",
+    "gh-pages": "^1.1.0",
     "mapbox-gl": "^0.42.2",
     "react": "^16.2.0",
     "react-chartjs-2": "^2.6.4",
@@ -14,6 +16,8 @@
     "react-virtualized-select": "^3.1.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

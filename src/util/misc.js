@@ -10,7 +10,7 @@ export const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n)
 
 export const toObj = arrOfObjs => Object.assign({}, ...arrOfObjs)
 
-const computeDiff = (val1, val2) => {
+export const computeDiff = (val1, val2) => {
   if (!isNumeric(val1) || !isNumeric(val2)) return
   return val1 / val2 - 1
 }
