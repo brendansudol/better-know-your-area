@@ -19,7 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/data/data.json')
+    fetch(`${process.env.PUBLIC_URL}/data/data.json`)
       .then(response => response.json())
       .then(data => this.setState({ data }))
   }
