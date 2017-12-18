@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import VirtualizedSelect from 'react-virtualized-select'
 
+import Footer from './Footer'
+import Header from './Header'
 import Loading from './Loading'
 import Map from './Map'
 
@@ -58,6 +60,8 @@ class App extends Component {
 
     return (
       <div className="p2">
+        <Header />
+
         <div className="h5" style={{ maxWidth: 400 }}>
           <VirtualizedSelect
             options={selectOptions}
@@ -80,6 +84,8 @@ class App extends Component {
         </div>
 
         <Map data={data} geoid={geoid} />
+
+        <Footer />
       </div>
     )
   }
