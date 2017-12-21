@@ -86,7 +86,7 @@ class Map extends Component {
         <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
         <div
           id="map"
-          style={{ height: 300, width: 400 }}
+          style={{ height: 300, width: '100%' }}
           ref={div => (this.mapHolder = div)}
         />
       </div>

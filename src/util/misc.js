@@ -28,5 +28,16 @@ export const comparePlaces = (d1, d2) => {
   }
 }
 
+export const getParams = str =>
+  str
+    .slice(1)
+    .split('&')
+    .filter(d => d.length)
+    .reduce((params, hash) => {
+      const [key, val] = hash.split('=')
+      const valGood = val === undefined ? null : decodeURIComponent(val)
+      return Object.assign(params, { [key]: valGood })
+    }, {})
+
 export const MAPBOX_KEY =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA'

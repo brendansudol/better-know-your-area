@@ -1,0 +1,6 @@
+/* overrides */
+
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-default {
+    font-family: consolas, courier, monospace;
+}
