@@ -9,10 +9,10 @@
     "geojson-extent": "^0.3.2",
     "gh-pages": "^1.1.0",
     "mapbox-gl": "^0.42.2",
-    "odometer": "^0.4.8",
     "react": "^16.2.0",
     "react-chartjs-2": "^2.6.4",
     "react-dom": "^16.2.0",
+    "react-motion": "^0.5.2",
     "react-scripts": "1.0.17",
     "react-virtualized-select": "^3.1.0"
   },

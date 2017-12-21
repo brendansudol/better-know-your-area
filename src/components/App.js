@@ -4,12 +4,12 @@ import VirtualizedSelect from 'react-virtualized-select'
 import Footer from './Footer'
 import Header from './Header'
 import Loading from './Loading'
-import Odometer from './Odometer'
+import NumberAnimate from './NumberAnimate'
 import Map from './Map'
 
 import { CATEGORIES, METRICS } from '../util/metrics'
 import { computeDiff } from '../util/misc'
-import { fmt, formatNum, formatPerc } from '../util/formats'
+import { formatNum, formatPerc } from '../util/formats'
 
 class App extends Component {
   constructor(props) {
@@ -89,8 +89,8 @@ class App extends Component {
           />
         </div>
 
-        <div className="mb3">
-          <Odometer value={metrics.median_house_value} />
+        <div className="mb3 h3 monospace bold">
+          <NumberAnimate value={metrics.median_house_value} />
         </div>
 
         <div className="mb2">
@@ -118,7 +118,9 @@ class App extends Component {
             <div key={d.id} className="mb1 py1 border-bottom border-silver">
               <div>{d.name}</div>
               <div className="h3 monospace clearfix">
-                <div className="sm-col sm-col-3">{fmt(d.val, d.fmt)}</div>
+                <div className="sm-col sm-col-3">
+                  <NumberAnimate value={d.val} format={d.fmt} />
+                </div>
                 <div className="sm-col sm-col-3">
                   {formatPerc(d.state.diff)}
                 </div>
