@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import VirtualizedSelect from 'react-virtualized-select'
 
+import DiffNum from './DiffNum'
 import Footer from './Footer'
 import Header from './Header'
 import Loading from './Loading'
+import Progress from './Progress'
 import Map from './Map'
 
 import { CATEGORIES, METRICS } from '../util/metrics'
 import { computeDiff } from '../util/misc'
-import { fmt, formatNum, formatPerc } from '../util/formats'
+import { fmt, formatNum } from '../util/formats'
 
 class App extends Component {
   constructor(props) {
@@ -84,6 +86,8 @@ class App extends Component {
       }))
       .filter(d => (cat !== 'all' ? d.cat.id === cat : true))
 
+    const rand = Math.random()
+
     return (
       <div className="p2">
         <Header />
@@ -121,14 +125,14 @@ class App extends Component {
             <div key={cat.id} className="mb2">
               <h3>{cat.display}</h3>
 
-              <table className="col-12 bg-white">
+              <table className="bg-white table-light border">
                 <thead className="left-align">
                   <tr>
-                    <th className="col-4" />
-                    <th className="col-2">Metric</th>
-                    <th className="col-2">vs. State</th>
-                    <th className="col-2">vs. USA</th>
-                    <th className="col-2">Rank</th>
+                    <th className="w-p-40">Metric</th>
+                    <th className="w-p-15">Value</th>
+                    <th className="w-p-15">vs. State</th>
+                    <th className="w-p-15">vs. USA</th>
+                    <th className="w-p-15">Rank</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -136,16 +140,14 @@ class App extends Component {
                     <tr key={m.id}>
                       <td>{m.name}</td>
                       <td className="monospace">{fmt(m.val, m.fmt)}</td>
-                      <td className="monospace">{formatPerc(m.state.diff)}</td>
-                      <td className="monospace">{formatPerc(m.usa.diff)}</td>
                       <td>
-                        <progress
-                          value="0.375"
-                          className="progress"
-                          style={{ maxWidth: '80%' }}
-                        >
-                          0.375
-                        </progress>
+                        <DiffNum x={m.state.diff} />
+                      </td>
+                      <td>
+                        <DiffNum x={m.usa.diff} />
+                      </td>
+                      <td>
+                        <Progress w={rand * 100} />
                       </td>
                     </tr>
                   ))}
