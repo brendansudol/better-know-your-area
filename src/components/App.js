@@ -65,7 +65,7 @@ class App extends Component {
 
     const metricsData = METRICS.map(m => {
       const catLower = m.category.toLowerCase()
-      const val = metrics[m.id]
+      const { value: val, rank } = metrics[m.id]
       const valState = state.metrics[m.id]
       const valUsa = usa.metrics[m.id]
 
@@ -73,6 +73,8 @@ class App extends Component {
         ...m,
         catLower,
         val,
+        rank,
+        ptile: +fmt(rank / 3142 * 100, '.1f'),
         state: { val: valState, diff: computeDiff(val, valState) },
         usa: { val: valUsa, diff: computeDiff(val, valUsa) },
       }
@@ -85,8 +87,6 @@ class App extends Component {
         metrics: metricsData.filter(m => m.catLower === cat.id),
       }))
       .filter(d => (cat !== 'all' ? d.cat.id === cat : true))
-
-    const rand = Math.random()
 
     return (
       <div className="p2">
@@ -147,7 +147,7 @@ class App extends Component {
                         <DiffNum x={m.usa.diff} />
                       </td>
                       <td>
-                        <Progress w={rand * 100} />
+                        <Progress w={m.ptile} />
                       </td>
                     </tr>
                   ))}
