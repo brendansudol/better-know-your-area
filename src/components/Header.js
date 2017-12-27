@@ -1,8 +1,17 @@
 import React from 'react'
 
 const Header = () => (
-  <header>
-    <h1 className="mt0 mb3 h3 caps">Better know your area</h1>
+  <header className="clearfix white bg-black">
+    <div className="sm-col">
+      <a href="/" className="btn py2 caps">
+        Better know your area
+      </a>
+    </div>
+    <div class="sm-col-right">
+      <a href="/" className="btn py2 h5 regular">
+        About
+      </a>
+    </div>
   </header>
 )
 

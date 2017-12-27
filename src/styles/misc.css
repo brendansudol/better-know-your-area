@@ -19,6 +19,11 @@ td {
   vertical-align: top;
 }
 
+.py05 {
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+}
+
 .table-light td,
 .table-light th {
   border-bottom-width: 1px;
@@ -40,4 +45,17 @@ td {
 
 .width-animate {
   transition: width 0.5s ease;
+}
+
+.monospace {
+  font-family: consolas, courier, monospace;
+}
+
+.multiline-padded-text {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.mapbox-improve-map {
+  display: none;
 }

@@ -3,14 +3,13 @@ import VirtualizedSelect from 'react-virtualized-select'
 
 import DiffNum from './DiffNum'
 import Footer from './Footer'
-import Header from './Header'
 import Loading from './Loading'
 import Progress from './Progress'
 import Map from './Map'
 
 import { CATEGORIES, METRICS } from '../util/metrics'
 import { computeDiff } from '../util/misc'
-import { fmt, formatNum } from '../util/formats'
+import { fmt } from '../util/formats'
 
 class App extends Component {
   constructor(props) {
@@ -59,7 +58,7 @@ class App extends Component {
       display: c,
     }))
 
-    const { name, population, related, metrics } = datum
+    const { name, related, metrics } = datum
     const state = data.find(d => d.geoid === related.state)
     const usa = data.find(d => d.geoid === '01000US')
 
@@ -89,75 +88,83 @@ class App extends Component {
       .filter(d => (cat !== 'all' ? d.cat.id === cat : true))
 
     return (
-      <div className="p2">
-        <Header />
-
-        <div className="mb3 h5" style={{ maxWidth: 400 }}>
-          <VirtualizedSelect
-            options={selectOptions}
-            onChange={this.handleSelect}
-            value={geoid}
-          />
-        </div>
-
-        <h2>{name}</h2>
-        <div className="mb3">Population: {formatNum(population)}</div>
-
-        <div className="mb2">
-          {catOptions.map(c => (
-            <button
-              key={c.id}
-              type="button"
-              className={`mb1 mr1 btn btn-outline h5 ${
-                cat === c.id ? 'bold' : 'regular'
-              }`}
-              onClick={this.handleFilterClick(c.id)}
-            >
-              {c.display}
-            </button>
-          ))}
-        </div>
-
-        {false && <Map data={data} geoid={geoid} />}
-
-        <div className="mb2">
-          {metricsByCat.map(({ cat, metrics }) => (
-            <div key={cat.id} className="mb2">
-              <h3>{cat.display}</h3>
-
-              <table className="bg-white table-light border">
-                <thead className="left-align">
-                  <tr>
-                    <th className="w-p-40">Metric</th>
-                    <th className="w-p-15">Value</th>
-                    <th className="w-p-15">vs. State</th>
-                    <th className="w-p-15">vs. USA</th>
-                    <th className="w-p-15">Rank</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {metrics.map(m => (
-                    <tr key={m.id}>
-                      <td>{m.name}</td>
-                      <td className="monospace">{fmt(m.val, m.fmt)}</td>
-                      <td>
-                        <DiffNum x={m.state.diff} />
-                      </td>
-                      <td>
-                        <DiffNum x={m.usa.diff} />
-                      </td>
-                      <td>
-                        <Progress w={m.ptile} />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      <div>
+        <header className="clearfix white bg-black">
+          <div className="sm-col">
+            <a href="/" className="btn p2 h5 caps">
+              Better know your area
+            </a>
+          </div>
+          <div className="sm-col-right black">
+            <div className="mb1 sm-m0 px2 py1 h6" style={{ width: 250 }}>
+              <VirtualizedSelect
+                options={selectOptions}
+                onChange={this.handleSelect}
+                value={geoid}
+              />
             </div>
-          ))}
-        </div>
+          </div>
+        </header>
 
-        <Footer />
+        {true && <Map data={data} geoid={geoid} name={name} />}
+
+        <div className="px2 py3">
+          <div className="mb2">
+            {catOptions.map(c => (
+              <button
+                key={c.id}
+                type="button"
+                className={`mb1 mr1 px1 py05 btn h6 regular ${
+                  cat === c.id ? 'btn-primary bg-black' : 'btn-outline'
+                }`}
+                onClick={this.handleFilterClick(c.id)}
+              >
+                {c.display}
+              </button>
+            ))}
+          </div>
+
+          <div className="mb2">
+            {metricsByCat.map(({ cat, metrics }) => (
+              <div key={cat.id} className="mb2">
+                <h3>{cat.display}</h3>
+
+                <div className="overflow-auto">
+                  <table className="bg-white table-light border">
+                    <thead className="left-align">
+                      <tr>
+                        <th className="w-p-40">Metric</th>
+                        <th className="w-p-15">Value</th>
+                        <th className="w-p-15">vs. State</th>
+                        <th className="w-p-15">vs. USA</th>
+                        <th className="w-p-15">Rank</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {metrics.map(m => (
+                        <tr key={m.id}>
+                          <td>{m.name}</td>
+                          <td className="monospace">{fmt(m.val, m.fmt)}</td>
+                          <td>
+                            <DiffNum x={m.state.diff} />
+                          </td>
+                          <td>
+                            <DiffNum x={m.usa.diff} />
+                          </td>
+                          <td>
+                            <Progress w={m.ptile} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <Footer />
+        </div>
       </div>
     )
   }

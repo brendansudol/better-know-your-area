@@ -1,10 +1,10 @@
 import React from 'react'
 
 const Footer = () => (
-  <footer className="mt3 py2 h6 border-top border-silver">
+  <footer className="mt4 py3 h6 border-top border-silver">
     <a
       href="https://github.com/brendansudol/better-know-your-area"
-      className="mr2 underline"
+      className="mr2 underline black"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -12,7 +12,7 @@ const Footer = () => (
     </a>
     <a
       href="https://brendansudol.com"
-      className="underline"
+      className="underline black"
       rel="noopener noreferrer"
       target="_blank"
     >

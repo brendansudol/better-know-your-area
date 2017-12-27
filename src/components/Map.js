@@ -19,6 +19,8 @@ class Map extends Component {
       zoom,
     })
 
+    map.scrollZoom.disable()
+
     map.on('load', this.initPlace)
 
     map.on('move', () => {
@@ -79,16 +81,26 @@ class Map extends Component {
   }
 
   render() {
-    const { lng, lat, zoom } = this.state
+    const { name } = this.props
 
     return (
-      <div>
-        <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
+      <div className="relative">
         <div
           id="map"
           style={{ height: 300, width: '100%' }}
           ref={div => (this.mapHolder = div)}
         />
+        <div
+          className="absolute"
+          style={{ maxWidth: 300, top: '50%', transform: 'translate(0, -50%)' }}
+        >
+          <span
+            className="ml2 h1 bold bg-white multiline-padded-text"
+            style={{ lineHeight: '1.3', padding: '4px 8px' }}
+          >
+            {name}
+          </span>
+        </div>
       </div>
     )
   }
