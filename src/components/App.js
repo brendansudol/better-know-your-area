@@ -18,11 +18,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      fetch(`${process.env.PUBLIC_URL}/data/sample.json`)
-        .then(response => response.json())
-        .then(data => this.setState({ data }))
-    }, 5000)
+    fetch(`${process.env.PUBLIC_URL}/data/sample.json`)
+      .then(response => response.json())
+      .then(data => this.setState({ data }))
   }
 
   handleFilterClick = cat => () => {
