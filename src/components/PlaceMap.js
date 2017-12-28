@@ -6,10 +6,11 @@ import { MAPBOX_KEY } from '../util/misc'
 
 mapboxgl.accessToken = MAPBOX_KEY
 
-class Map extends Component {
-  state = { lng: -96, lat: 37, zoom: 2 }
+class PlaceMap extends Component {
+  state = { lng: -96, lat: 37, zoom: 2, loaded: false }
 
   componentDidMount() {
+    const { datum } = this.props
     const { lng, lat, zoom } = this.state
 
     const map = new mapboxgl.Map({
@@ -21,7 +22,9 @@ class Map extends Component {
 
     map.scrollZoom.disable()
 
-    map.on('load', this.initPlace)
+    map.on('load', () => {
+      if (datum) this.initPlace(datum.geom)
+    })
 
     map.on('move', () => {
       const { lng, lat } = map.getCenter()
@@ -37,23 +40,21 @@ class Map extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const { geoid } = newProps
+    const { datum } = newProps
+    if (!datum) return
 
-    if (geoid !== this.props.geoid) {
-      return this.highlightPlace(geoid)
-    }
+    const { loaded } = this.state
+    const { geoid, geom } = datum
+    if (!loaded) return this.initPlace(geom)
+    if (geoid !== this.props.geoid) return this.highlightPlace(geom)
   }
 
-  initPlace = () => {
-    const { data, geoid } = this.props
+  initPlace = geom => {
     const { map } = this._mapbox
-
-    const datum = data.find(d => d.geoid === geoid)
-    if (!datum) return
 
     map.addSource('place', {
       type: 'geojson',
-      data: datum.geom,
+      data: geom,
     })
 
     map.addLayer({
@@ -66,22 +67,19 @@ class Map extends Component {
       },
     })
 
-    map.fitBounds(extent(datum.geom), { padding: 20 })
+    map.fitBounds(extent(geom), { padding: 20 })
+
+    this.setState({ loaded: true })
   }
 
-  highlightPlace = geoid => {
-    const { data } = this.props
+  highlightPlace = geom => {
     const { map } = this._mapbox
-
-    const datum = data.find(d => d.geoid === geoid)
-    if (!datum) return
-
-    map.getSource('place').setData(datum.geom)
-    map.fitBounds(extent(datum.geom), { padding: 20 })
+    map.getSource('place').setData(geom)
+    map.fitBounds(extent(geom), { padding: 20 })
   }
 
   render() {
-    const { name } = this.props
+    const { datum } = this.props
 
     return (
       <div className="relative">
@@ -90,20 +88,26 @@ class Map extends Component {
           style={{ height: 300, width: '100%' }}
           ref={div => (this.mapHolder = div)}
         />
-        <div
-          className="absolute"
-          style={{ maxWidth: 300, top: '50%', transform: 'translate(0, -50%)' }}
-        >
-          <span
-            className="ml2 h1 bold bg-white multiline-padded-text"
-            style={{ lineHeight: '1.3', padding: '4px 8px' }}
+        {datum && (
+          <div
+            className="absolute"
+            style={{
+              maxWidth: 300,
+              top: '50%',
+              transform: 'translate(0, -50%)',
+            }}
           >
-            {name}
-          </span>
-        </div>
+            <span
+              className="ml2 h1 bold bg-white multiline-padded-text"
+              style={{ lineHeight: '1.3', padding: '4px 8px' }}
+            >
+              {datum.name}
+            </span>
+          </div>
+        )}
       </div>
     )
   }
 }
 
-export default Map
+export default PlaceMap

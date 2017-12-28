@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import VirtualizedSelect from 'react-virtualized-select'
 
-import DiffNum from './DiffNum'
 import Footer from './Footer'
 import Loading from './Loading'
-import Progress from './Progress'
-import Map from './Map'
-
-import { CATEGORIES, METRICS } from '../util/metrics'
-import { computeDiff } from '../util/misc'
-import { fmt } from '../util/formats'
+import PlaceMap from './PlaceMap'
+import Tables from './Tables'
 
 class App extends Component {
   constructor(props) {
@@ -23,9 +18,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`${process.env.PUBLIC_URL}/data/data.json`)
-      .then(response => response.json())
-      .then(data => this.setState({ data }))
+    setTimeout(() => {
+      fetch(`${process.env.PUBLIC_URL}/data/sample.json`)
+        .then(response => response.json())
+        .then(data => this.setState({ data }))
+    }, 5000)
   }
 
   handleFilterClick = cat => () => {
@@ -44,48 +41,15 @@ class App extends Component {
 
   render() {
     const { data, cat, geoid } = this.state
-    const datum = data.find(d => d.geoid === geoid)
 
-    if (data.length === 0) return <Loading />
-    if (!datum) return <p>BAD GEOID (TODO: BETTER UI)</p>
+    const datum = data.find(d => d.geoid === geoid)
+    const isLoading = data.length === 0
 
     const selectOptions = data
       .filter(d => d.sumlevel === '050')
       .map(d => ({ label: d.name, value: d.geoid }))
 
-    const catOptions = ['All', ...CATEGORIES].map(c => ({
-      id: c.toLowerCase(),
-      display: c,
-    }))
-
-    const { name, related, metrics } = datum
-    const state = data.find(d => d.geoid === related.state)
-    const usa = data.find(d => d.geoid === '01000US')
-
-    const metricsData = METRICS.map(m => {
-      const catLower = m.category.toLowerCase()
-      const { value: val, rank } = metrics[m.id]
-      const valState = state.metrics[m.id]
-      const valUsa = usa.metrics[m.id]
-
-      return {
-        ...m,
-        catLower,
-        val,
-        rank,
-        ptile: +fmt(rank / 3142 * 100, '.1f'),
-        state: { val: valState, diff: computeDiff(val, valState) },
-        usa: { val: valUsa, diff: computeDiff(val, valUsa) },
-      }
-    })
-
-    const metricsByCat = catOptions
-      .slice(1)
-      .map(cat => ({
-        cat,
-        metrics: metricsData.filter(m => m.catLower === cat.id),
-      }))
-      .filter(d => (cat !== 'all' ? d.cat.id === cat : true))
+    // if (!datum) return <p>BAD GEOID (TODO: BETTER UI)</p>
 
     return (
       <div>
@@ -106,65 +70,20 @@ class App extends Component {
           </div>
         </header>
 
-        {true && <Map data={data} geoid={geoid} name={name} />}
+        <PlaceMap datum={datum} />
 
-        <div className="px2 py3">
-          <div className="mb2">
-            {catOptions.map(c => (
-              <button
-                key={c.id}
-                type="button"
-                className={`mb1 mr1 px1 py05 btn h6 regular ${
-                  cat === c.id ? 'btn-primary bg-black' : 'btn-outline'
-                }`}
-                onClick={this.handleFilterClick(c.id)}
-              >
-                {c.display}
-              </button>
-            ))}
-          </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Tables
+            cat={cat}
+            data={data}
+            geoid={geoid}
+            updateCat={this.handleFilterClick}
+          />
+        )}
 
-          <div className="mb2">
-            {metricsByCat.map(({ cat, metrics }) => (
-              <div key={cat.id} className="mb2">
-                <h3>{cat.display}</h3>
-
-                <div className="overflow-auto">
-                  <table className="bg-white table-light border">
-                    <thead className="left-align">
-                      <tr>
-                        <th className="w-p-40">Metric</th>
-                        <th className="w-p-15">Value</th>
-                        <th className="w-p-15">vs. State</th>
-                        <th className="w-p-15">vs. USA</th>
-                        <th className="w-p-15">Rank</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {metrics.map(m => (
-                        <tr key={m.id}>
-                          <td>{m.name}</td>
-                          <td className="monospace">{fmt(m.val, m.fmt)}</td>
-                          <td>
-                            <DiffNum x={m.state.diff} />
-                          </td>
-                          <td>
-                            <DiffNum x={m.usa.diff} />
-                          </td>
-                          <td>
-                            <Progress w={m.ptile} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <Footer />
-        </div>
+        {!isLoading && <Footer />}
       </div>
     )
   }

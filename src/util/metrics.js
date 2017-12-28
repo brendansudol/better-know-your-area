@@ -320,6 +320,9 @@ export const CATEGORIES = [
   'Ancestry',
 ]
 
-export const catOptions = [...CATEGORIES, 'All'].map(d => d.toLowerCase())
+export const catOptions = ['All', ...CATEGORIES].map(cat => ({
+  id: cat.toLowerCase(),
+  display: cat,
+}))
 
-export const isCat = x => x && catOptions.includes(x.toLowerCase())
+export const isCat = x => x && catOptions.find(c => c.id === x.toLowerCase())
