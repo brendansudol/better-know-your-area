@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import VirtualizedSelect from 'react-virtualized-select'
 
 import Footer from './Footer'
+import Header from './Header'
 import Loading from './Loading'
 import PlaceMap from './PlaceMap'
 import Tables from './Tables'
@@ -47,26 +47,13 @@ class App extends Component {
       .filter(d => d.sumlevel === '050')
       .map(d => ({ label: d.name, value: d.geoid }))
 
-    // if (!datum) return <p>BAD GEOID (TODO: BETTER UI)</p>
-
     return (
       <div>
-        <header className="clearfix white bg-black">
-          <div className="sm-col">
-            <a href="/" className="btn p2 h5 caps">
-              Better know your area
-            </a>
-          </div>
-          <div className="sm-col-right black">
-            <div className="mb1 sm-m0 px2 py1 h6" style={{ width: 250 }}>
-              <VirtualizedSelect
-                options={selectOptions}
-                onChange={this.handleSelect}
-                value={geoid}
-              />
-            </div>
-          </div>
-        </header>
+        <Header
+          geoid={geoid}
+          geoOptions={selectOptions}
+          onChange={this.handleSelect}
+        />
 
         <PlaceMap datum={datum} />
 
@@ -81,7 +68,7 @@ class App extends Component {
           />
         )}
 
-        {!isLoading && <Footer />}
+        {datum && <Footer />}
       </div>
     )
   }

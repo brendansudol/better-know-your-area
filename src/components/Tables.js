@@ -1,6 +1,7 @@
 import React from 'react'
 
 import DiffNum from './DiffNum'
+import GeoError from './GeoError'
 import Progress from './Progress'
 
 import { METRICS, catOptions } from '../util/metrics'
@@ -9,6 +10,9 @@ import { fmt } from '../util/formats'
 
 const Tables = ({ cat, data, geoid, updateCat }) => {
   const datum = data.find(d => d.geoid === geoid)
+
+  if (!datum) return <GeoError />
+
   const { related, metrics } = datum
 
   const state = data.find(d => d.geoid === related.state)
