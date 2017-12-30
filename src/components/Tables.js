@@ -44,7 +44,7 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
     .filter(d => (cat !== 'all' ? d.cat.id === cat : true))
 
   return (
-    <div className="px2 py3">
+    <div className="px2 py3 sm-px3">
       <div className="mb2">
         {catOptions.map(c => (
           <button
@@ -73,7 +73,14 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
                     <th className="w-p-15">Value</th>
                     <th className="w-p-15">vs. State</th>
                     <th className="w-p-15">vs. USA</th>
-                    <th className="w-p-15">Rank</th>
+                    <th className="w-p-15">
+                      <span
+                        className="hint--bottom-left hint--no-animate"
+                        aria-label="A tooltip A tooltip A tooltip A tooltip"
+                      >
+                        Rank
+                      </span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>

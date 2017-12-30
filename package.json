@@ -8,6 +8,7 @@
     "d3-format": "^1.2.1",
     "geojson-extent": "^0.3.2",
     "gh-pages": "^1.1.0",
+    "hint.css": "^2.5.0",
     "mapbox-gl": "^0.42.2",
     "react": "^16.2.0",
     "react-chartjs-2": "^2.6.4",

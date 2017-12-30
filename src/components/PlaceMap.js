@@ -98,7 +98,7 @@ class PlaceMap extends Component {
             }}
           >
             <span
-              className="ml2 h1 bold bg-white multiline-padded-text"
+              className="ml2 sm-ml3 h1 bold bg-white multiline-padded-text"
               style={{ lineHeight: '1.3', padding: '4px 8px' }}
             >
               {datum.name}

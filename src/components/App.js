@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Footer from './Footer'
 import Header from './Header'
 import Loading from './Loading'
+import Modal from './Modal'
 import PlaceMap from './PlaceMap'
 import Tables from './Tables'
 
@@ -11,9 +12,10 @@ class App extends Component {
     super(props)
 
     this.state = {
-      data: [],
       cat: props.initCat,
       geoid: props.initGeo,
+      data: [],
+      modal: false,
     }
   }
 
@@ -32,13 +34,17 @@ class App extends Component {
     this.setState({ geoid: geo.value }, this.updateUrl)
   }
 
+  toggleModal = () => {
+    this.setState(prev => ({ modal: !prev.modal }))
+  }
+
   updateUrl = () => {
     const { cat, geoid } = this.state
     window.location.hash = `g=${geoid}&c=${cat}`
   }
 
   render() {
-    const { data, cat, geoid } = this.state
+    const { cat, data, geoid, modal } = this.state
 
     const datum = data.find(d => d.geoid === geoid)
     const isLoading = data.length === 0
@@ -69,6 +75,8 @@ class App extends Component {
         )}
 
         {datum && <Footer />}
+
+        <Modal open={modal} toggle={this.toggleModal} />
       </div>
     )
   }
