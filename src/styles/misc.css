@@ -24,13 +24,6 @@ td {
   padding-top: 0.25rem;
 }
 
-.table-light td,
-.table-light th {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: rgba(0, 0, 0, 0.125);
-}
-
 .border {
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
@@ -56,8 +49,49 @@ td {
   -webkit-box-decoration-break: clone;
 }
 
+.table-light td,
+.table-light th {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0, 0, 0, 0.125);
+}
+
 .mapbox-improve-map {
   display: none;
+}
+
+.Select-control {
+  height: 28px;
+}
+
+.Select-input {
+  height: 26px;
+}
+
+.Select-placeholder,
+.Select--single > .Select-control .Select-value {
+  line-height: 26px;
+}
+
+.Select-input > input {
+  height: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.Select.is-focused:not(.is-open) > .Select-control {
+  background: #fff;
+  border-color: #007eff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.Select.is-open > .Select-control {
+  border-color: #ccc;
+}
+
+.VirtualizedSelectOption {
+  cursor: pointer;
 }
 
 [class*='hint-']:after {

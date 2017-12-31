@@ -59,6 +59,7 @@ class App extends Component {
           geoid={geoid}
           geoOptions={selectOptions}
           onChange={this.handleSelect}
+          toggleModal={this.toggleModal}
         />
 
         <PlaceMap datum={datum} />
