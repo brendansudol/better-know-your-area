@@ -56,6 +56,10 @@ td {
   border-bottom-color: rgba(0, 0, 0, 0.125);
 }
 
+.usa-logo rect {
+  fill: #fff;
+}
+
 .mapbox-improve-map {
   display: none;
 }

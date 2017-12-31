@@ -5,7 +5,10 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.7.1",
+    "d3-ease": "^1.0.3",
     "d3-format": "^1.2.1",
+    "d3-selection": "^1.2.0",
+    "d3-transition": "^1.1.1",
     "geojson-extent": "^0.3.2",
     "gh-pages": "^1.1.0",
     "hint.css": "^2.5.0",

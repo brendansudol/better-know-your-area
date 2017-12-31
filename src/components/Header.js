@@ -1,10 +1,13 @@
 import React from 'react'
 import VirtualizedSelect from 'react-virtualized-select'
 
+import Logo from './Logo'
+
 const Header = ({ geoid, geoOptions, onChange, toggleModal }) => (
   <div>
     <header className="clearfix px2 py1 sm-px3 bg-red white">
       <div className="left">
+        <Logo />
         <a href="/" className="btn px0 py1 h3">
           Better Know Your Area
         </a>
