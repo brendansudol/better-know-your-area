@@ -1,7 +1,7 @@
 import React from 'react'
 
-import DiffNum from './DiffNum'
 import GeoError from './GeoError'
+import NumDiff from './NumDiff'
 import Progress from './Progress'
 
 import { METRICS, catOptions } from '../util/metrics'
@@ -91,10 +91,10 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
                       <td>{m.name}</td>
                       <td className="monospace">{fmt(m.val, m.fmt)}</td>
                       <td>
-                        <DiffNum x={m.state.diff} />
+                        <NumDiff x={m.state.diff} />
                       </td>
                       <td>
-                        <DiffNum x={m.usa.diff} />
+                        <NumDiff x={m.usa.diff} />
                       </td>
                       <td>
                         <Progress w={m.ptile} />
