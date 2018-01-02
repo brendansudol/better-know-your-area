@@ -5,10 +5,7 @@ import { select, selectAll } from 'd3-selection'
 import 'd3-transition'
 
 import Usa from './Usa2'
-
-const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-const contains = (arr, el) => arr.indexOf(el) > -1
-const sample = arr => arr[rand(0, arr.length - 1)]
+import { contains, sample } from '../util/misc'
 
 class Logo extends Component {
   componentDidMount() {
@@ -25,7 +22,10 @@ class Logo extends Component {
       flip(this)
     })
 
-    setInterval(() => flip(sample(rectsArr)), 2000)
+    setInterval(() => {
+      flip(sample(rectsArr))
+      flip(sample(rectsArr))
+    }, 2000)
 
     function flip(a) {
       if (contains(active, a)) return

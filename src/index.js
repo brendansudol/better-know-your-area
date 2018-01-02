@@ -12,6 +12,6 @@ const initGeo = geo || '05000US51059'
 const initCat = isCat(cat) ? cat.toLowerCase() : 'all'
 
 render(
-    <App initGeo={initGeo} initCat={initCat} />,
-    document.getElementById('root')
+  <App initGeo={initGeo} initCat={initCat} />,
+  document.getElementById('root')
 )

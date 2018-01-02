@@ -1,5 +1,12 @@
 import { METRICS } from './metrics'
 
+export const rand = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min
+
+export const contains = (arr, el) => arr.indexOf(el) > -1
+
+export const sample = arr => arr[rand(0, arr.length - 1)]
+
 export const pick = (obj, props) =>
   props.reduce((a, e) => {
     a[e] = obj[e]

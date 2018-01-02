@@ -6,6 +6,7 @@ import Loading from './Loading'
 import Modal from './Modal'
 import PlaceMap from './PlaceMap'
 import Tables from './Tables'
+import { sample } from '../util/misc'
 
 class App extends Component {
   constructor(props) {
@@ -34,6 +35,14 @@ class App extends Component {
     this.setState({ geoid: geo.value }, this.updateUrl)
   }
 
+  randomize = () => {
+    const { data } = this.state
+    if (!data.length) return
+
+    const rando = sample(data.filter(d => d.sumlevel === '050'))
+    this.setState({ geoid: rando.geoid }, this.updateUrl)
+  }
+
   toggleModal = () => {
     this.setState(prev => ({ modal: !prev.modal }))
   }
@@ -59,6 +68,7 @@ class App extends Component {
           geoid={geoid}
           geoOptions={selectOptions}
           onChange={this.handleSelect}
+          randomize={this.randomize}
           toggleModal={this.toggleModal}
         />
 

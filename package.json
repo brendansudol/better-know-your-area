@@ -26,7 +26,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier":
+      "prettier --single-quote --trailing-comma es5 --semi false --write \"src/**/*.js\""
   },
   "devDependencies": {
     "prettier": "^1.9.2"

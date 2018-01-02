@@ -3,7 +3,7 @@ import VirtualizedSelect from 'react-virtualized-select'
 
 import Logo from './Logo'
 
-const Header = ({ geoid, geoOptions, onChange, toggleModal }) => (
+const Header = ({ geoid, geoOptions, onChange, randomize, toggleModal }) => (
   <div>
     <header className="clearfix px2 py1 sm-px3 bg-red white">
       <div className="left">
@@ -33,7 +33,7 @@ const Header = ({ geoid, geoOptions, onChange, toggleModal }) => (
         </div>
       </div>
       <div className="right py1">
-        <button type="button" className="btn p0 h6 regular">
+        <button type="button" className="btn p0 h6 regular" onClick={randomize}>
           Randomize
         </button>
       </div>
