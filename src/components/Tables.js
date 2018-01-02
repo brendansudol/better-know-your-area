@@ -62,14 +62,16 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
 
       <div className="mb2">
         {dataByCat.map(({ cat, metrics }) => (
-          <div key={cat.id} className="mb2">
+          <div key={cat.id}>
             <h3>{cat.display}</h3>
 
             <div className="overflow-auto">
-              <table className="bg-white table-light border">
+              <table className="mb3 bg-white table-light border rounded">
                 <thead className="left-align">
                   <tr>
-                    <th className="w-p-40">Metric</th>
+                    <th className="w-p-40" style={{ minWidth: 240 }}>
+                      Metric
+                    </th>
                     <th className="w-p-15">Value</th>
                     <th className="w-p-15">vs. State</th>
                     <th className="w-p-15">vs. USA</th>

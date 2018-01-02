@@ -2,10 +2,12 @@ import React from 'react'
 
 import { formatPerc } from '../util/formats'
 
+const color = x => (x === 0 ? 'black' : x < 0 ? 'red' : 'green')
+
 const DiffNum = ({ x }) => (
-  <div className={`monospace ${x < 0 ? 'red' : 'green'}`}>
-    {x < 0 ? '↓' : '↑'} {formatPerc(x)}
-  </div>
+  <span className={`monospace ${color(x)}`}>
+    {x === 0 ? 'Same' : formatPerc(x)}
+  </span>
 )
 
 export default DiffNum

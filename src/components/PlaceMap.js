@@ -16,6 +16,7 @@ class PlaceMap extends Component {
     const map = new mapboxgl.Map({
       container: this.mapHolder,
       style: 'mapbox://styles/mapbox/streets-v9',
+      interactive: false,
       center: [lng, lat],
       zoom,
     })
@@ -67,7 +68,7 @@ class PlaceMap extends Component {
       },
     })
 
-    map.fitBounds(extent(geom), { padding: 20 })
+    map.fitBounds(extent(geom), { padding: 24 })
 
     this.setState({ loaded: true })
   }
@@ -75,7 +76,7 @@ class PlaceMap extends Component {
   highlightPlace = geom => {
     const { map } = this._mapbox
     map.getSource('place').setData(geom)
-    map.fitBounds(extent(geom), { padding: 20 })
+    map.fitBounds(extent(geom), { padding: 24 })
   }
 
   render() {
