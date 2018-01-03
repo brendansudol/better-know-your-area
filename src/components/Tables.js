@@ -5,7 +5,7 @@ import NumDiff from './NumDiff'
 import Progress from './Progress'
 
 import { METRICS, catOptions } from '../util/metrics'
-import { computeDiff } from '../util/misc'
+import { computeDiff, stateCodes } from '../util/misc'
 import { fmt } from '../util/formats'
 
 const Tables = ({ cat, data, geoid, updateCat }) => {
@@ -17,6 +17,8 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
 
   const state = data.find(d => d.geoid === related.state)
   const usa = data.find(d => d.geoid === '01000US')
+
+  const stateAbbrev = stateCodes[state.name]
 
   const dataByMetrics = METRICS.map(m => {
     const catLower = m.category.toLowerCase()
@@ -67,21 +69,16 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
 
             <div className="overflow-auto">
               <table className="mb3 bg-white table-light border rounded">
-                <thead className="left-align">
+                <thead className="left-align h5 nowrap">
                   <tr>
                     <th className="w-p-40" style={{ minWidth: 240 }}>
                       Metric
                     </th>
                     <th className="w-p-15">Value</th>
-                    <th className="w-p-15">vs. State</th>
+                    <th className="w-p-15">vs. {stateAbbrev || 'State'}</th>
                     <th className="w-p-15">vs. USA</th>
-                    <th className="w-p-15">
-                      <span
-                        className="hint--bottom-left hint--no-animate"
-                        aria-label="A tooltip A tooltip A tooltip A tooltip"
-                      >
-                        Rank
-                      </span>
+                    <th className="w-p-15" style={{ minWidth: 100 }}>
+                      Rank
                     </th>
                   </tr>
                 </thead>
