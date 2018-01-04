@@ -5,8 +5,8 @@ import NumDiff from './NumDiff'
 import Progress from './Progress'
 
 import { METRICS, catOptions } from '../util/metrics'
-import { computeDiff, stateCodes } from '../util/misc'
-import { fmt } from '../util/formats'
+import { COUNTY_CT, computeDiff, stateCodes } from '../util/misc'
+import { fmt, formatNum as num } from '../util/formats'
 
 const Tables = ({ cat, data, geoid, updateCat }) => {
   const datum = data.find(d => d.geoid === geoid)
@@ -23,6 +23,8 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
   const dataByMetrics = METRICS.map(m => {
     const catLower = m.category.toLowerCase()
     const { value: val, rank } = metrics[m.id]
+    const ptile = +fmt(rank / COUNTY_CT * 100, '.1f')
+    const tooltip = `${num(rank)} / ${num(COUNTY_CT)} (${num(ptile)}%)`
     const valState = state.metrics[m.id]
     const valUsa = usa.metrics[m.id]
 
@@ -31,7 +33,8 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
       catLower,
       val,
       rank,
-      ptile: +fmt(rank / 3142 * 100, '.1f'),
+      ptile,
+      tooltip,
       state: { val: valState, diff: computeDiff(val, valState) },
       usa: { val: valUsa, diff: computeDiff(val, valUsa) },
     }
@@ -94,7 +97,7 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
                         <NumDiff x={m.usa.diff} />
                       </td>
                       <td>
-                        <Progress w={m.ptile} />
+                        <Progress tooltip={m.tooltip} width={m.ptile} />
                       </td>
                     </tr>
                   ))}
