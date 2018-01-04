@@ -1,11 +1,12 @@
 import React from 'react'
 
 import GeoError from './GeoError'
+import Link from './Link'
 import NumDiff from './NumDiff'
 import Progress from './Progress'
 
 import { METRICS, catOptions } from '../util/metrics'
-import { COUNTY_CT, computeDiff, stateCodes } from '../util/misc'
+import { COUNTY_CT, censusUrl, computeDiff, stateCodes } from '../util/misc'
 import { fmt, formatNum as num } from '../util/formats'
 
 const Tables = ({ cat, data, geoid, updateCat }) => {
@@ -65,7 +66,7 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
         ))}
       </div>
 
-      <div className="mb2">
+      <div>
         {dataByCat.map(({ cat, metrics }) => (
           <div key={cat.id}>
             <h3>{cat.display}</h3>
@@ -106,6 +107,21 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="pb3 h5 border-bottom border-silver">
+        <div>More data from US Census Bureau:</div>
+        <Link external href={censusUrl(geoid, '02')} className="mr1 black bold">
+          Social
+        </Link>
+        <Link external href={censusUrl(geoid, '04')} className="mr1 black bold">
+          Housing
+        </Link>
+        <Link external href={censusUrl(geoid, '03')} className="mr1 black bold">
+          Economics
+        </Link>
+        <Link external href={censusUrl(geoid, '05')} className="black bold">
+          Demographics
+        </Link>
       </div>
     </div>
   )

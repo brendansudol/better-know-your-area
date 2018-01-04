@@ -51,6 +51,13 @@ export const MAPBOX_KEY =
 
 export const COUNTY_CT = 3142
 
+export const censusUrl = (geoid, dp) => {
+  const base = 'https://factfinder.census.gov/bkmk/table/1.0/en/ACS/15_5YR'
+  const geo = `0500000US${geoid.split('US')[1]}`
+
+  return `${base}/DP${dp}/${geo}`
+}
+
 export const stateCodes = {
   Alabama: 'AL',
   Alaska: 'AK',
