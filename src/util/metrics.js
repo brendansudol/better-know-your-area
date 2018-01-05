@@ -114,6 +114,18 @@ export const METRICS = [
     name: 'Italian',
   },
   {
+    category: 'Ancestry',
+    fmt: '.1%',
+    id: 'ancestry_polish',
+    name: 'Polish',
+  },
+  {
+    category: 'Ancestry',
+    fmt: '.1%',
+    id: 'ancestry_other',
+    name: 'Other or unknown origin',
+  },
+  {
     category: 'Housing',
     fmt: '.1%',
     id: 'last_yr_same_house',
@@ -202,6 +214,12 @@ export const METRICS = [
     fmt: '$,.0f',
     id: 'mean_household_income',
     name: 'Mean household income',
+  },
+  {
+    category: 'Economics',
+    fmt: '$,.0f',
+    id: 'per_capita_income',
+    name: 'Per capita income',
   },
   {
     category: 'Economics',
@@ -295,6 +313,12 @@ export const METRICS = [
     name: 'Black or African American',
   },
   { category: 'Demographics', fmt: '.1%', id: 'asian', name: 'Asian' },
+  {
+    category: 'Demographics',
+    fmt: '.1%',
+    id: 'american_indian',
+    name: 'American Indian and Alaska Native',
+  },
   {
     category: 'Demographics',
     fmt: '.1%',
