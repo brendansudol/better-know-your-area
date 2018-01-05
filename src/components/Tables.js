@@ -1,18 +1,17 @@
 import React from 'react'
 
-import GeoError from './GeoError'
 import Link from './Link'
+import NoGeo from './NoGeo'
 import NumDiff from './NumDiff'
 import Progress from './Progress'
-
+import { fmt, formatNum as num } from '../util/formats'
 import { METRICS, catOptions } from '../util/metrics'
 import { COUNTY_CT, censusUrl, computeDiff, stateCodes } from '../util/misc'
-import { fmt, formatNum as num } from '../util/formats'
 
 const Tables = ({ cat, data, geoid, updateCat }) => {
   const datum = data.find(d => d.geoid === geoid)
 
-  if (!datum) return <GeoError />
+  if (!datum) return <NoGeo />
 
   const { related, metrics } = datum
 
@@ -75,13 +74,13 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
               <table className="mb3 bg-white table-light border rounded">
                 <thead className="left-align h5 nowrap">
                   <tr>
-                    <th className="w-p-40" style={{ minWidth: 240 }}>
+                    <th className="w-40" style={{ minWidth: 240 }}>
                       Metric
                     </th>
-                    <th className="w-p-15">Value</th>
-                    <th className="w-p-15">vs. {stateAbbrev || 'State'}</th>
-                    <th className="w-p-15">vs. USA</th>
-                    <th className="w-p-15" style={{ minWidth: 100 }}>
+                    <th className="w-15">Value</th>
+                    <th className="w-15">vs. {stateAbbrev || 'State'}</th>
+                    <th className="w-15">vs. USA</th>
+                    <th className="w-15" style={{ minWidth: 100 }}>
                       Rank
                     </th>
                   </tr>
@@ -108,18 +107,19 @@ const Tables = ({ cat, data, geoid, updateCat }) => {
           </div>
         ))}
       </div>
+
       <div className="pb3 h5 border-bottom border-silver">
         <div>More data from US Census Bureau:</div>
-        <Link external href={censusUrl(geoid, '02')} className="mr1 black bold">
+        <Link href={censusUrl(geoid, '02')} className="mr1 black bold" external>
           Social
         </Link>
-        <Link external href={censusUrl(geoid, '04')} className="mr1 black bold">
+        <Link href={censusUrl(geoid, '04')} className="mr1 black bold" external>
           Housing
         </Link>
-        <Link external href={censusUrl(geoid, '03')} className="mr1 black bold">
+        <Link href={censusUrl(geoid, '03')} className="mr1 black bold" external>
           Economics
         </Link>
-        <Link external href={censusUrl(geoid, '05')} className="black bold">
+        <Link href={censusUrl(geoid, '05')} className="black bold" external>
           Demographics
         </Link>
       </div>

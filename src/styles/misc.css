@@ -1,12 +1,9 @@
+/* base elements */
+
 table {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
-}
-
-th {
-  text-align: left;
-  vertical-align: bottom;
 }
 
 th,
@@ -15,8 +12,19 @@ td {
   padding: 0.25rem 1rem;
 }
 
+th {
+  text-align: left;
+  vertical-align: bottom;
+}
+
 td {
   vertical-align: top;
+}
+
+/* utilities */
+
+.ml05 {
+  margin-left: 0.25rem;
 }
 
 .py05 {
@@ -36,16 +44,12 @@ td {
   background-color: #eee;
 }
 
-.w-p-40 {
+.w-40 {
   width: 40%;
 }
 
-.w-p-15 {
+.w-15 {
   width: 15%;
-}
-
-.width-animate {
-  transition: width 0.5s ease;
 }
 
 .monospace {
@@ -56,10 +60,16 @@ td {
   cursor: help;
 }
 
-.multiline-padded-text {
+.align-tb {
+  vertical-align: text-bottom;
+}
+
+.padded-text {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
+
+/* misc components */
 
 .table-light td,
 .table-light th {
@@ -72,9 +82,30 @@ td {
   fill: #fff;
 }
 
+.select-holder {
+  width: 210px;
+}
+
+@media (min-width: 40em) {
+  .select-holder {
+    width: 260px;
+  }
+}
+
+@media (max-width: 40em) {
+  .logo-holder {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* mapbox overrides */
+
 .mapbox-improve-map {
   display: none;
 }
+
+/* react-virtualized-select overrides */
 
 .Select-control {
   height: 28px;
@@ -98,7 +129,6 @@ td {
 .Select.is-focused:not(.is-open) > .Select-control {
   background: #fff;
   border-color: #007eff;
-  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -109,6 +139,8 @@ td {
 .VirtualizedSelectOption {
   cursor: pointer;
 }
+
+/* hint.css overrides */
 
 [class*='hint-']:after {
   background: #333;
@@ -123,6 +155,6 @@ td {
   white-space: normal;
 }
 
-.numeric[class*='hint-']:after {
+.is-numeric[class*='hint-']:after {
   font-family: consolas, courier, monospace;
 }

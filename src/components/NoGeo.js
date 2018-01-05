@@ -1,11 +1,11 @@
 import React from 'react'
 
-const GeoError = () => (
+const NoGeo = () => (
   <div className="px2 py3">
-    <div className="p3 mx-auto bg-green white center" style={{ maxWidth: 700 }}>
+    <div className="p3 mx-auto bg-red white center" style={{ maxWidth: 700 }}>
       <div className="monospace bold">Stay tuned!</div>
     </div>
   </div>
 )
 
-export default GeoError
+export default NoGeo
