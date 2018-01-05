@@ -23,7 +23,12 @@ class App extends Component {
   componentDidMount() {
     fetch(`${process.env.PUBLIC_URL}/data/data.json`)
       .then(response => response.json())
-      .then(data => this.setState({ data }))
+      .then(data => this.setState({ data }, this.onDataLoaded))
+  }
+
+  onDataLoaded = () => {
+    const { geoid } = this.state
+    if (!geoid) this.randomize()
   }
 
   handleFilterClick = cat => () => {
@@ -81,6 +86,7 @@ class App extends Component {
             cat={cat}
             data={data}
             geoid={geoid}
+            randomize={this.randomize}
             updateCat={this.handleFilterClick}
           />
         )}

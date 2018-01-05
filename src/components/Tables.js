@@ -1,17 +1,17 @@
 import React from 'react'
 
 import Link from './Link'
-import NoGeo from './NoGeo'
+import NoMatch from './NoMatch'
 import NumDiff from './NumDiff'
 import Progress from './Progress'
 import { fmt, formatNum as num } from '../util/formats'
 import { METRICS, catOptions } from '../util/metrics'
 import { COUNTY_CT, censusUrl, computeDiff, stateCodes } from '../util/misc'
 
-const Tables = ({ cat, data, geoid, updateCat }) => {
+const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
   const datum = data.find(d => d.geoid === geoid)
 
-  if (!datum) return <NoGeo />
+  if (!datum) return <NoMatch randomize={randomize} />
 
   const { related, metrics } = datum
 

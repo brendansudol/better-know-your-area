@@ -8,7 +8,7 @@ import { isCat } from './util/metrics'
 import './styles'
 
 const { g: geo, c: cat } = getParams(window.location.hash)
-const initGeo = geo || '05000US51059'
+const initGeo = geo || ''
 const initCat = isCat(cat) ? cat.toLowerCase() : 'all'
 
 render(

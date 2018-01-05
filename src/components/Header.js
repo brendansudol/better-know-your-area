@@ -26,6 +26,7 @@ const Header = ({ geoid, geoOptions, onChange, randomize, toggleModal }) => (
       <div className="left">
         <div className="h6 select-holder" style={{ padding: '6px 0' }}>
           <VirtualizedSelect
+            placeholder="Select a county..."
             options={geoOptions}
             onChange={onChange}
             value={geoid}
