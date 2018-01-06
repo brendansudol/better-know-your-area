@@ -43,7 +43,7 @@ export const tweetUrl = data => {
 }
 
 export const censusUrl = (geoid, dp) => {
-  const base = 'https://factfinder.census.gov/bkmk/table/1.0/en/ACS/15_5YR'
+  const base = 'https://factfinder.census.gov/bkmk/table/1.0/en/ACS/16_5YR'
   const geo = `0500000US${geoid.split('US')[1]}`
   return `${base}/DP${dp}/${geo}`
 }
