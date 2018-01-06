@@ -30,6 +30,18 @@ export const getParams = str =>
       return Object.assign(params, { [key]: valGood })
     }, {})
 
+const enc = txt => encodeURIComponent(txt)
+
+export const tweetUrl = data => {
+  const { origin, href } = window.location
+  const url = data ? href : origin
+
+  let msg = '🏘📊🇺🇸 Better Know Your Area'
+  if (data) msg += ` :: ${data.name}`
+
+  return `https://twitter.com/intent/tweet?text=${enc(msg)}&url=${enc(url)}`
+}
+
 export const censusUrl = (geoid, dp) => {
   const base = 'https://factfinder.census.gov/bkmk/table/1.0/en/ACS/15_5YR'
   const geo = `0500000US${geoid.split('US')[1]}`

@@ -70,6 +70,7 @@ class App extends Component {
     return (
       <div>
         <Header
+          datum={datum}
           geoid={geoid}
           geoOptions={selectOptions}
           onChange={this.handleSelect}

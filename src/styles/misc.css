@@ -64,6 +64,10 @@ td {
   vertical-align: text-bottom;
 }
 
+.align-tt {
+  vertical-align: text-top;
+}
+
 .padded-text {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -83,7 +87,7 @@ td {
 }
 
 .select-holder {
-  width: 210px;
+  width: 200px;
 }
 
 @media (min-width: 40em) {
