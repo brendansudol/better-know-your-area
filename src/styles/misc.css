@@ -96,12 +96,12 @@ td {
   }
 }
 
-@media (max-width: 40em) {
+/*@media (max-width: 40em) {
   .logo-holder {
     width: 100%;
     text-align: center;
   }
-}
+}*/
 
 /* mapbox overrides */
 

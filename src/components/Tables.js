@@ -85,7 +85,7 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="h5 sm-h4">
                   {metrics.map(m => (
                     <tr key={m.id}>
                       <td>{m.name}</td>

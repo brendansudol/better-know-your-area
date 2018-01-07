@@ -7,7 +7,7 @@ const Footer = () => (
     <Link href="/" className="mr2 black">
       Better Know Your Area
     </Link>
-    <Link external href="https://brendansudol.com" className="mr2 black">
+    <Link external href="https://twitter.com/brensudol" className="mr2 black">
       @brensudol
     </Link>
     <Link

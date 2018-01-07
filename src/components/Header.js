@@ -17,14 +17,14 @@ const Header = ({
     <header className="clearfix px2 py1 sm-px3 bg-red white">
       <div className="left logo-holder">
         <Logo />
-        <a href="/" className="btn px0 py1 h4 sm-h3">
+        <a href="/" className="btn px0 py1 h5 sm-h3">
           Better Know Your Area
         </a>
       </div>
-      <div className="right xs-hide">
+      <div className="right">
         <button
           type="button"
-          className="btn px0 py1 h5 regular"
+          className="btn px0 py1 h6 sm-h5 regular"
           onClick={toggleModal}
         >
           About
