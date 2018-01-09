@@ -7,10 +7,9 @@ import { MAPBOX_KEY } from '../util/misc'
 mapboxgl.accessToken = MAPBOX_KEY
 
 class PlaceMap extends Component {
-  state = { lng: -96, lat: 37, zoom: 2, loaded: false }
+  state = { lng: -96, lat: 37, zoom: 2, ready: false, hasPlace: false }
 
   componentDidMount() {
-    const { datum } = this.props
     const { lng, lat, zoom } = this.state
 
     const map = new mapboxgl.Map({
@@ -24,7 +23,9 @@ class PlaceMap extends Component {
     map.scrollZoom.disable()
 
     map.on('load', () => {
+      const { datum } = this.props
       if (datum) this.initPlace(datum.geom)
+      this.setState({ ready: true })
     })
 
     map.on('move', () => {
@@ -42,11 +43,11 @@ class PlaceMap extends Component {
 
   componentWillReceiveProps(newProps) {
     const { datum } = newProps
-    if (!datum) return
+    const { ready, hasPlace } = this.state
+    if (!datum || !ready) return
 
-    const { loaded } = this.state
     const { geoid, geom } = datum
-    if (!loaded) return this.initPlace(geom)
+    if (!hasPlace) return this.initPlace(geom)
     if (geoid !== this.props.geoid) return this.highlightPlace(geom)
   }
 
@@ -69,8 +70,7 @@ class PlaceMap extends Component {
     })
 
     map.fitBounds(extent(geom), { padding: 24 })
-
-    this.setState({ loaded: true })
+    this.setState({ hasPlace: true })
   }
 
   highlightPlace = geom => {
