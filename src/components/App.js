@@ -16,7 +16,7 @@ class App extends Component {
       cat: props.initCat,
       geoid: props.initGeo,
       data: [],
-      modal: false,
+      modal: false
     }
   }
 

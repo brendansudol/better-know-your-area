@@ -24,7 +24,7 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
     const catLower = m.category.toLowerCase()
     const { value: val, rank } = metrics[m.id]
     const ptile = +fmt(rank / COUNTY_CT * 100, '.1f')
-    const tooltip = `${num(rank)} / ${num(COUNTY_CT)} (${num(ptile)}%)`
+    const tooltip = `${num(rank)} of ${num(COUNTY_CT)} (${num(ptile)}%)`
     const valState = state.metrics[m.id]
     const valUsa = usa.metrics[m.id]
 
@@ -36,7 +36,7 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
       ptile,
       tooltip,
       state: { val: valState, diff: computeDiff(val, valState) },
-      usa: { val: valUsa, diff: computeDiff(val, valUsa) },
+      usa: { val: valUsa, diff: computeDiff(val, valUsa) }
     }
   })
 
@@ -44,7 +44,7 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
     .slice(1)
     .map(cat => ({
       cat,
-      metrics: dataByMetrics.filter(d => d.catLower === cat.id),
+      metrics: dataByMetrics.filter(d => d.catLower === cat.id)
     }))
     .filter(d => (cat !== 'all' ? d.cat.id === cat : true))
 
@@ -55,8 +55,8 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
           <button
             key={c.id}
             type="button"
-            className={`mb1 mr1 px1 py05 btn h6 regular ${
-              cat === c.id ? 'btn-primary bg-black' : 'btn-outline'
+            className={`mb1 mr1 px1 py05 btn h6 regular btn-primary ${
+              cat === c.id ? 'bg-black' : 'bg-white black'
             }`}
             onClick={updateCat(c.id)}
           >
@@ -71,17 +71,21 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
             <h3>{cat.display}</h3>
 
             <div className="overflow-auto">
-              <table className="mb3 bg-white table-light border rounded">
+              <table className="mb3 bg-white table-light table-striped border rounded">
                 <thead className="left-align h5 nowrap">
                   <tr>
                     <th className="w-40" style={{ minWidth: 240 }}>
                       Metric
                     </th>
-                    <th className="w-15">Value</th>
-                    <th className="w-15">vs. {stateAbbrev || 'State'}</th>
-                    <th className="w-15">vs. USA</th>
-                    <th className="w-15" style={{ minWidth: 100 }}>
-                      Rank
+                    <th className="w-15 right-align pr3">Value</th>
+                    <th className="w-10 right-align pr3">
+                      vs. {stateAbbrev || 'State'}
+                    </th>
+                    <th className="w-10 border-right border-silver right-align pr3">
+                      vs. USA
+                    </th>
+                    <th className="w-20 pl3" style={{ minWidth: 100 }}>
+                      County Rank
                     </th>
                   </tr>
                 </thead>
@@ -89,14 +93,16 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
                   {metrics.map(m => (
                     <tr key={m.id}>
                       <td>{m.name}</td>
-                      <td className="monospace">{fmt(m.val, m.fmt)}</td>
-                      <td>
+                      <td className="monospace right-align pr3">
+                        {fmt(m.val, m.fmt)}
+                      </td>
+                      <td className="right-align pr3">
                         <NumDiff x={m.state.diff} />
                       </td>
-                      <td>
+                      <td className="border-right border-silver right-align pr3">
                         <NumDiff x={m.usa.diff} />
                       </td>
-                      <td>
+                      <td className="pl3">
                         <Progress tooltip={m.tooltip} width={m.ptile} />
                       </td>
                     </tr>

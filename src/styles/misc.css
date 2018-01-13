@@ -41,15 +41,27 @@ td {
 }
 
 .bg-silver {
-  background-color: #eee;
+  background-color: #ddd;
+}
+
+.w-50 {
+  width: 50%;
 }
 
 .w-40 {
   width: 40%;
 }
 
+.w-20 {
+  width: 20%;
+}
+
 .w-15 {
   width: 15%;
+}
+
+.w-10 {
+  width: 10%;
 }
 
 .monospace {
@@ -80,6 +92,19 @@ td {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: rgba(0, 0, 0, 0.125);
+}
+
+.table-bordered {
+  border-collapse: collapse;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.03125);
 }
 
 .usa-logo rect {
@@ -155,7 +180,7 @@ td {
   font-size: 11px;
   font-weight: 600;
   line-height: 1.2;
-  min-width: 125px;
+  min-width: 135px;
   white-space: normal;
 }
 
