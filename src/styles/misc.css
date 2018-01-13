@@ -103,6 +103,10 @@ td {
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+.table-striped thead th {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.03125);
 }

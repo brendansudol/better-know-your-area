@@ -71,7 +71,7 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
             <h3>{cat.display}</h3>
 
             <div className="overflow-auto">
-              <table className="mb3 bg-white table-light table-striped border rounded">
+              <table className="mb3 bg-white table-striped border rounded">
                 <thead className="left-align h5 nowrap">
                   <tr>
                     <th className="w-40" style={{ minWidth: 240 }}>
