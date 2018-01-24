@@ -36,7 +36,7 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
       ptile,
       tooltip,
       state: { val: valState, diff: computeDiff(val, valState) },
-      usa: { val: valUsa, diff: computeDiff(val, valUsa) }
+      usa: { val: valUsa, diff: computeDiff(val, valUsa) },
     }
   })
 
@@ -44,7 +44,7 @@ const Tables = ({ cat, data, geoid, randomize, updateCat }) => {
     .slice(1)
     .map(cat => ({
       cat,
-      metrics: dataByMetrics.filter(d => d.catLower === cat.id)
+      metrics: dataByMetrics.filter(d => d.catLower === cat.id),
     }))
     .filter(d => (cat !== 'all' ? d.cat.id === cat : true))
 

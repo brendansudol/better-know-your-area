@@ -48,7 +48,7 @@ const Modal = ({ open, toggle }) => {
           </p>
           <p className="mt0">
             Our goal is to make it easier to learn about the places you care
-            about and highlight some interesting and publically available data
+            about and highlight some interesting and publicly available data
             about the American people.
           </p>
           <p className="mt0">
